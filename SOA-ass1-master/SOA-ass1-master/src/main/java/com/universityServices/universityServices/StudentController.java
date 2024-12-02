@@ -10,6 +10,7 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import javax.xml.transform.OutputKeys;
@@ -191,7 +192,7 @@ public class StudentController {
         students.removeIf(student -> student.getId().equals(id));
         return saveToXml();
     }
-    public List<Student> sortStudents(String attribute) {
+    public List<Student> sortStudents(String attribute, String order) {
         if (attribute.equals("id")) {
             students.sort(Comparator.comparing(Student::getId));
         } else if (attribute.equals("firstName")) {
@@ -208,6 +209,11 @@ public class StudentController {
             students.sort(Comparator.comparing(Student::getAddress));
         } else {
             throw new IllegalArgumentException("Invalid attribute: " + attribute);
+        }
+        if(order.equals("descending")){
+            Collections.reverse(students);
+        }else if(!order.equals("ascending")){
+            throw new IllegalArgumentException("Invalid order: " + order);
         }
         saveToXml();
         return students;
@@ -269,7 +275,8 @@ public class StudentController {
         return updateByID(student);
     }
     @GetMapping("/sort")
-    public List<Student> sortByAttribute(@RequestParam("attribute") String attribute) {
-        return sortStudents(attribute);
+    public List<Student> sortByAttribute(@RequestParam("attribute") String attribute,
+                                         @RequestParam("order") String order) {
+        return sortStudents(attribute, order);
     }
 }
