@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="form.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+    <title>Registration Form</title>
+  </head>
+  <body background="#00bca9">
+    <div id="back">
+      <div id="centerContainer">
+        <div id="leftColumn">
+          <div id="title">Registration Form</div>
+          <ul id="myList">
+            <li class="pages page1" onclick="showContainer(0)">
+              <div class="circle" id="c0"></div>
+              Registration
+            </li>
+            <li class="pages page2" onclick="showContainer(2)">
+              <div class="circle hidden" id="c2"></div>
+              Search
+            </li>
+            <li class="pages page3" onclick="showContainer(3)">
+              <div class="circle hidden" id="c3"></div>
+              Display and delete
+            </li>
+          </ul>
+        </div>
+
+        <div id="rightColumn">
+          <div class="containerNum container" id="container0">
+            <form method="post" id="numForm">
+              <label for="stdNum" class="label">Students number:</label>
+              <br />
+              <input
+                type="number"
+                id="stdNum"
+                name="stdNum"
+                class="input"
+                required
+              />
+              <br /><br />
+              <div class="buttons">
+                <button type="submit" class="button submit">Enter</button>
+              </div>
+            </form>
+          </div>
+
+          <div class="container1 container hidden" id="container1">
+            <form method="POST" id="mainForm">
+              <label for="id" class="label">Student ID:</label>
+              <br />
+              <input type="text" id="id" name="id" class="input" />
+              <br /><br />
+              <label for="firstName" class="label">First Name:</label>
+              <br />
+              <input
+                type="text"
+                id="firstName"
+                name="firstName"
+                class="input"
+              />
+              <br /><br />
+
+              <label for="lastName" class="label">Last Name:</label>
+              <br />
+              <input type="text" id="lastName" name="lastName" class="input" />
+              <br /><br />
+
+              <label for="gender" class="label">Gender:</label>
+              <br />
+              <select id="gender" name="gender" class="label input">
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+                <option value="Other">Other</option>
+              </select>
+              <br /><br />
+
+              <label for="gpa" class="label">GPA:</label>
+              <br />
+              <input
+                type="number"
+                id="gpa"
+                class="input"
+                name="gpa"
+                step="0.01"
+                min="0"
+                max="4"
+              />
+              <br /><br />
+
+              <label for="level" class="label">Level:</label>
+              <br />
+              <input
+                type="number"
+                id="level"
+                class="input"
+                name="level"
+                min="1"
+                max="4"
+              />
+              <br /><br />
+
+              <label for="address" class="label">Address:</label>
+              <br />
+              <input type="text" id="address" class="input" name="address" />
+              <br /><br />
+              <div class="buttons">
+                <button type="reset" class="button reset">Reset</button>
+                <button
+                  type="submit"
+                  class="button submit"
+                  id="submitButton"
+                  onclick="handleSubmit()"
+                >
+                  Submit
+                </button>
+              </div>
+            </form>
+          </div>
+
+          <div class="container2 container hidden" id="container2">
+            <div class="searchTitle">Search</div>
+
+            <div class="formDiv" id="formDiv">
+              <div class="SearchColumn">
+                <form method="post" id="searchForm">
+                  <div class="rowSearch6">
+                    <label for="IDSearch" class="label">Search By ID:</label>
+                    <br />
+                    <input
+                      type="number"
+                      id="IDSearch"
+                      name="IDSearch"
+                      class="inputSearch"
+                    />
+                    <button
+                      type="button"
+                      class="button Search"
+                      onclick="getStdID()"
+                    >
+                      Search
+                    </button>
+                  </div>
+                  <div class="rowSearch1">
+                    <label for="firstName" class="label"
+                      >Search By First Name:</label
+                    >
+                    <br />
+                    <input
+                      type="text"
+                      id="nameSearch"
+                      name="FirstnameSearch"
+                      class="inputSearch"
+                    />
+                    <button
+                      type="button"
+                      class="button Search"
+                      onclick="getStdFirstname()"
+                    >
+                      Search
+                    </button>
+                  </div>
+                  <div class="rowSearch3">
+                    <label for="lastName" class="label"
+                      >Search By last Name:</label
+                    >
+                    <br />
+                    <input
+                      type="text"
+                      id="LastNameSearch"
+                      name="LastNameSearch"
+                      class="inputSearch"
+                    />
+                    <button
+                      type="button"
+                      class="button Search"
+                      onclick="getStdLastName()"
+                    >
+                      Search
+                    </button>
+                  </div>
+
+                  <div class="rowSearch2">
+                    <label for="GPASearch" class="label">Search By GPA:</label>
+                    <br />
+                    <input
+                      type="number"
+                      id="GPASearch"
+                      name="GPASearch"
+                      class="inputSearch"
+                    />
+                    <button
+                      type="button"
+                      class="button Search"
+                      onclick="getStdGPA()"
+                    >
+                      Search
+                    </button>
+                  </div>
+
+                  <div class="rowSearch4">
+                    <label for="gender" class="label">Search By Gender:</label>
+                    <br />
+                    <select id="GenderSearch" name="gender" class="inputSearch">
+                      <option value="Male">Male</option>
+                      <option value="Female">Female</option>
+                    </select>
+                    <button
+                      type="button"
+                      class="button Search"
+                      onclick="getStdGender()"
+                    >
+                      Search
+                    </button>
+                  </div>
+
+                  <div class="rowSearch5">
+                    <label for="LevelSearch" class="label"
+                      >Search By Level:</label
+                    >
+                    <br />
+                    <input
+                      type="number"
+                      id="LevelSearch"
+                      name="LevelSearch"
+                      class="inputSearch"
+                      required
+                    />
+                    <button
+                      type="button"
+                      class="button Search"
+                      onclick="getStdLevel()"
+                    >
+                      Search
+                    </button>
+                  </div>
+
+                  <div class="rowSearch7">
+                    <label for="AddressSearch" class="label"
+                      >Search By Address:</label
+                    >
+                    <br />
+                    <input
+                      type="text"
+                      id="AddressSearch"
+                      name="AddressSearch"
+                      class="inputSearch"
+                      required
+                    />
+                    <button
+                      type="button"
+                      class="button Search"
+                      onclick="getStdAddress()"
+                    >
+                      Search
+                    </button>
+                  </div>
+                </form>
+              </div>
+              <div class="resultColumn">
+                <div id="studentsearch"></div>
+              </div>
+              <div id="studentNum"></div>
+            </div>
+          </div>
+
+          <div id="container3" class="container3 hidden container">
+            <div class="Sort">
+              <button type="button" class="button Search SortButt" onclick="Sort()">
+                Sort
+              </button>
+              <select id="Order" name="Order" class="inputSort">
+                <option value="Ascending">Ascending</option>
+                <option value="descending">descending</option>
+
+              </select>
+              <label for="Sort" class="label labelSort">Ordere By:</label>
+              <select id="Sort" name="Order" class="inputSort">
+                <option value="id">ID</option>
+                <option value="firstName">First Name</option>
+                <option value="lastName">Last Name</option>
+                <option value="gender">Gender</option>
+                <option value="level">Level</option>
+                <option value="address">Address</option>
+                <option value="gpa">GPA</option>
+              </select>
+              <label for="SortBy" class="label labelSort">Sort By:</label>
+            </div>
+
+            <div id="studentList"></div>
+            <div id="studentNum"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="form.js"></script>
+  </body>
+</html>
