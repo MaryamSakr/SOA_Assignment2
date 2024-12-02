@@ -10,6 +10,7 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import javax.xml.transform.OutputKeys;
 @RestController
@@ -112,8 +113,46 @@ public class StudentController {
         }
         return matchingStudents;
     }
-
-
+    public List<Student> searchLastName(String lastName) {
+        List<Student> matchingStudents = new ArrayList<>();
+        for (Student student : students) {
+            // Adjusted to case-insensitive comparison
+            if (student.getLastName().equalsIgnoreCase(lastName)) {
+                matchingStudents.add(student);
+            }
+        }
+        return matchingStudents;
+    }
+    public List<Student> searchGender(String gender) {
+        List<Student> matchingStudents = new ArrayList<>();
+        for (Student student : students) {
+            // Adjusted to case-insensitive comparison
+            if (student.getGender().equalsIgnoreCase(gender)) {
+                matchingStudents.add(student);
+            }
+        }
+        return matchingStudents;
+    }
+    public List<Student> searchLevel(int level) {
+        List<Student> matchingStudents = new ArrayList<>();
+        for (Student student : students) {
+            // Adjusted to case-insensitive comparison
+            if (student.getLevel() == level) {
+                matchingStudents.add(student);
+            }
+        }
+        return matchingStudents;
+    }
+    public List<Student> searchAddress(String address) {
+        List<Student> matchingStudents = new ArrayList<>();
+        for (Student student : students) {
+            // Adjusted to case-insensitive comparison
+            if (student.getAddress().equalsIgnoreCase(address)) {
+                matchingStudents.add(student);
+            }
+        }
+        return matchingStudents;
+    }
     public Boolean searchID(String id) {
         List<Student> matchingStudents = new ArrayList<>();
         for (Student student : students) {
@@ -123,10 +162,46 @@ public class StudentController {
         }
         return false;
     }
+    public String updateByID(Student stud){
+        for (Student student: students) {
+            if(student.getId().equals(stud.getId())){
+                student.setFirstName(stud.getFirstName());
+                student.setLastName(stud.getLastName());
+                student.setGpa(stud.getGpa());
+                student.setGender(stud.getGender());
+                student.setLevel(stud.getLevel());
+                student.setAddress(stud.getAddress());
+                break;
+            }
+        }
+        return saveToXml();
+    }
     public String deleteByID(String id){
         students.removeIf(student -> student.getId().equals(id));
         return saveToXml();
     }
+    public List<Student> sortStudents(String attribute) {
+        if (attribute.equals("id")) {
+            students.sort(Comparator.comparing(Student::getId));
+        } else if (attribute.equals("firstName")) {
+            students.sort(Comparator.comparing(Student::getFirstName));
+        } else if (attribute.equals("lastName")) {
+            students.sort(Comparator.comparing(Student::getLastName));
+        } else if (attribute.equals("gender")) {
+            students.sort(Comparator.comparing(Student::getGender));
+        } else if (attribute.equals("gpa")) {
+            students.sort(Comparator.comparing(Student::getGpa));
+        } else if (attribute.equals("level")) {
+            students.sort(Comparator.comparing(Student::getLevel));
+        } else if (attribute.equals("address")) {
+            students.sort(Comparator.comparing(Student::getAddress));
+        } else {
+            throw new IllegalArgumentException("Invalid attribute: " + attribute);
+        }
+        saveToXml();
+        return students;
+    }
+
     // REST Endpoints
     @GetMapping
     public List<Student> getStudents() {
@@ -150,6 +225,22 @@ public class StudentController {
     public List<Student> getStudentByFirstName(@RequestParam("firstName") String firstName) {
         return searchFirstName(firstName);
     }
+    @GetMapping("/searchByLastName")
+    public List<Student> getStudentByLastName(@RequestParam("lastName") String lastName) {
+        return searchLastName(lastName);
+    }
+    @GetMapping("/searchByGender")
+    public List<Student> getStudentByGender(@RequestParam("gender") String gender) {
+        return searchGender(gender);
+    }
+    @GetMapping("/searchByLevel")
+    public List<Student> getStudentByLevel(@RequestParam("level") int level) {
+        return searchLevel(level);
+    }
+    @GetMapping("/searchByAddress")
+    public List<Student> getStudentByAddress(@RequestParam("address") String address) {
+        return searchAddress(address);
+    }
     @GetMapping("/searchByID")
     public Boolean getStudentByID(@RequestParam("id") String id) {
         return searchID(id);
@@ -157,5 +248,13 @@ public class StudentController {
     @DeleteMapping("/delete")
     public String deleteStudent(@RequestParam("id") String id){
         return deleteByID(id);
+    }
+    @PatchMapping("/update")
+    public String updateStudent(@RequestBody Student student){
+        return updateByID(student);
+    }
+    @GetMapping("/sort")
+    public List<Student> sortByAttribute(@RequestParam("attribute") String attribute) {
+        return sortStudents(attribute);
     }
 }
